@@ -1,8 +1,9 @@
 'use strict';
 
 const http = require('http');
+
 const router = require('./lib/router.js');
-const api = require('./lib/api.js'); // eslint-disable-line
+require('./api/api.js');
 
 let isRunning = false;
 
@@ -16,9 +17,12 @@ module.exports = {
         isRunning = true;
         console.log(`Server is up and running on ${port}!`);
       });
+    }     else {
+      console.log('Server is already running');
     }
   },
   stop: () => {
-    console.log('Stop Not Implemented');
+    isRunning = false;
+    console.log('Server has been stopped');
   },
 };
