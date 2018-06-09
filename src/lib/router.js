@@ -30,7 +30,7 @@ router.route = (req,res) => {
       }
     })
     
-    .catch(err => {
+    .catch(err => { //eslint-disable-line
       res.status = 500;
       res.statusMessage = 'Server Error';
       res.write(`Error or Resource Not Found (${req.url.pathname})`);

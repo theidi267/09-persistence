@@ -2,48 +2,64 @@
 
 const router = require('../lib/router.js');
 
-const Note = require('../models/notes.js');
+const Note = require('../model/notes.js');
 
 let sendJSON = (res, obj) => {
   res.statusCode = 200;
-  res.statusMEssage = 'OK';
+  res.statusMessage = 'OK';
   res.setHeader('Content-Type', 'application/json');
   res.write(JSON.stringify(obj));
   res.end();
 };
 
-router.get('/api/v1/notes', (req,res) => {
+let sendJSON204 = (res, obj) => {
+  res.statusCode = 204;
+  res.statusMessage = 'OK';
+  res.setHeader('Content-Type', 'application/json');
+  res.write(JSON.stringify(obj));
+  res.end();
+};
+
+router.get('/api/v1/notes', (req, res) => {
+
   let id = req.url.query.id || null;
-  if(id) {
+
+  if (id) {
     let note = new Note();
     note.fetchOne(id)
-      .then(data => sendJSON(res, data) )
-      .catch(console.err);
-  }
-  else {
+      .then(data => sendJSON(res, data))
+      .catch(err => console.error(err));
+  } else {
     let note = new Note();
     note.fetchAll()
-      .then(data => sendJSON(res, data) )
-      .catch(console.err);
+      .then(data => sendJSON(res, data))
+      .catch(err => console.error);  //eslint-disable-line
   }
 });
 
-router.delete('/api/v1/notes', (req,res) => {
-  let id = req.url.query.id || null;
-  if(! id) { throw 'No ID Give'; }
+router.post('/api/v1/notes', (req, res) => {
 
-  let content = {
-    deleted: id,
-  };
+  let note = new Note(req.body);
+  note.save()
+    .then(data => sendJSON(res, data))
+    .catch(err => console.log(err));
 
-  sendJSON(res, content);
 });
 
-router.post('/api/v1/notes', (req,res) => {
-  let record = new Note(req.body);
-  record.save()
-    .then(data => sendJSON(res,data))
-    .catch(console.error);
+router.delete('/api/v1/notes', (req, res) => {
+  let id = req.url.query.id || null;
+  if (!id) { throw `${id} not found`;}
+  else {
+    let note = new Note();
+    note.delete(id)
+      .then(data => sendJSON204(res, data))
+      .catch(err => { //eslint-disable-line
+        res.statusCode = 500;
+        res.statusMessage = 'Server Error';
+        res.write('File Not Found');
+        res.end();
+      });
+  }
 });
 
 module.exports = {};
