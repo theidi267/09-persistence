@@ -1,7 +1,6 @@
 'use strict';
 
 const parser = require('./parser.js');
-
 const router = module.exports = {};
 
 router.routes = {};
@@ -15,7 +14,6 @@ methods.forEach( (method) => {
   router[method.toLowerCase()] = function(path, callback) {
     router.routes[method][path] = callback;
   };
-
 });
 
 router.route = (req,res) => {
@@ -36,6 +34,5 @@ router.route = (req,res) => {
       res.write(`Error or Resource Not Found (${req.url.pathname})`);
       res.end();
     });
-
 };
 

@@ -3,7 +3,7 @@
 const uuid = require('uuid/v4');
 const storage = require('../lib/storage.js');
 
-class Notes {
+class Note {
 
   constructor(data) {
     this.id = uuid();
@@ -27,7 +27,6 @@ class Notes {
   delete(id) {
     return storage.delete(id);
   }
-
 }
 
-module.exports = Notes;
+module.exports = Note;

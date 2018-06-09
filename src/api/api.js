@@ -1,19 +1,10 @@
 'use strict';
 
 const router = require('../lib/router.js');
-
 const Note = require('../model/notes.js');
 
 let sendJSON = (res, obj) => {
   res.statusCode = 200;
-  res.statusMessage = 'OK';
-  res.setHeader('Content-Type', 'application/json');
-  res.write(JSON.stringify(obj));
-  res.end();
-};
-
-let sendJSON204 = (res, obj) => {
-  res.statusCode = 204;
   res.statusMessage = 'OK';
   res.setHeader('Content-Type', 'application/json');
   res.write(JSON.stringify(obj));
@@ -33,17 +24,15 @@ router.get('/api/v1/notes', (req, res) => {
     let note = new Note();
     note.fetchAll()
       .then(data => sendJSON(res, data))
-      .catch(err => console.error);  //eslint-disable-line
+      .catch(err => console.error); //eslint-disable-line
   }
 });
 
-router.post('/api/v1/notes', (req, res) => {
-
-  let note = new Note(req.body);
-  note.save()
-    .then(data => sendJSON(res, data))
-    .catch(err => console.log(err));
-
+router.post('/api/v1/notes', (req,res) => {
+  let record = new Note(req.body);
+  record.save()
+    .then(data => sendJSON(res,data))
+    .catch(console.error);
 });
 
 router.delete('/api/v1/notes', (req, res) => {
@@ -52,7 +41,7 @@ router.delete('/api/v1/notes', (req, res) => {
   else {
     let note = new Note();
     note.delete(id)
-      .then(data => sendJSON204(res, data))
+      .then(data => sendJSON(res, data))
       .catch(err => { //eslint-disable-line
         res.statusCode = 500;
         res.statusMessage = 'Server Error';

@@ -1,7 +1,6 @@
 'use strict';
 
 const storage = module.exports = {};
-
 const database = {};
 
 storage.fetchAll = () => {
