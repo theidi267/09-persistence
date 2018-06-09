@@ -8,15 +8,18 @@ const dataDirectory = `${__dirname}/../../data`;
 
 storage.fetchAll = () => {
   return new Promise((resolve, reject) => {
-    let file = `${dataDirectory}.json`;
-    fs.readFile(file, (err, data) => {
-      if(err) { reject(err); }
-      if (data) {
-        let record = JSON.parse(data.toString());
-        resolveO(record);
-      }
-      else {
-        reject('Nothing Found');
+    let directory = dataDirectory;
+    fs.readdir(directory, (err, files) => {
+      if (err) { reject(err); }
+      else { 
+        let promises = [];
+        files.forEach( (el) => {
+          let id = el.replace(/\.json/, '');
+          promises.push(storage.fetchOne(id));
+        });
+        Promise.all(promises)
+          .then(contents => resolve(contents))
+          .catch(err => reject(err));
       }
     });
   });
@@ -38,23 +41,18 @@ storage.fetchOne = (id) => {
   });
 };
 
-// storage.updateOne = (record) => {
-//   return new Promise((resolve,reject) => {
-//     let file = `${dataDirectory}/${id}.json`;
-
-
-// };
-
 storage.deleteOne = (id) => {
-  return new Promise((resolve,reject) => {
+  return new Promise((resolve, reject) => {
     let file = `${dataDirectory}/${id}.json`;
-    // let text = JSON.stringify(record);
-    fs.unLink(file, (err) => {
-      if(err) {reject(err); }
-      else {resolve(id); }
+    fs.unlink(file, (err) => {
+      if (err) { reject(err); }
+      else {
+        resolve('Entry Was Deleted');
+      }
     });
   });
 };
+
 
 storage.save = (record) => {
   return new Promise((resolve,reject) => {
