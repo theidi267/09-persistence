@@ -1,7 +1,6 @@
 {
   "name": "09-persitence",
   "version": "1.0.0",
-  "description": "![cf](https://i.imgur.com/7v5ASc8.png) Lab 09: Vanilla REST API w/ Persistence",
   "main": "index.js",
   "scripts": {
     "lint": "eslint **/*.js",
@@ -12,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/justeban/09-persistence.git"
+    "url": "git+https://github.com/theidi267/09-persistence"
   },
   "author": "Justin Morris",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/justeban/09-persistence/issues"
+    "url": "https://github.com/theidi267/09-persistence"
   },
-  "homepage": "https://github.com/justeban/09-persistence#readme",
+  "homepage": "https://persistence-09.herokuapp.com/",
   "dependencies": {
     "dotenv": "^5.0.1",
     "eslint": "^4.19.1",
