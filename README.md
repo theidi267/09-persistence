@@ -4,6 +4,15 @@
 
 Timea Heidenreich
 
+[![Build Status](https://travis-ci.com/theidi267/09-persistence.svg?branch=master)](https://travis-ci.com/theidi267/09-persistence)
+
+
+- Github Repo: [https://github.com/theidi267/09-persistence](https://github.com/theidi267/09-persistence)
+- Herouku app: [https://persistence-09.herokuapp.com/](https://persistence-09.herokuapp.com/)
+- Travis Built: [https://travis-ci.com/theidi267/09-persistence](https://travis-ci.com/theidi267/09-persistence)
+
+
+
 ### Project
 
 Build a RESTful HTTP server that handles GRT, POST and DELETE requests. The  API uses fs to write data to a .jason file for persistance.
